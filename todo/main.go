@@ -15,7 +15,10 @@ func AddRoutes(r *gin.Engine) {
 }
 
 func main() {
-	db, _ := model.OpenDB("sqlite")
+	db, err := model.OpenDB("postgres")
+	if err != nil {
+		panic(err)
+	}
 	handlers.Use(db)
 	r := gin.Default()
 	AddRoutes(r)

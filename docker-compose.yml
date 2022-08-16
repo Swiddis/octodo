@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  todo:
+    image: todo
+    container_name: todo
+    build:
+      context: todo
+      target: prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - GIN_MODE=release
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    networks:
+      - todonet
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=todo
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=todo
+    healthcheck:
+      test: pg_isready -U todo -d todo
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - todonet
+
+networks:
+  todonet:
