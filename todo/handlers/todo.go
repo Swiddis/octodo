@@ -35,3 +35,12 @@ func PostTodo(c *gin.Context) {
 	}
 	c.JSON(201, todo)
 }
+
+func DeleteTodo(c *gin.Context) {
+	rawId := c.Param("id")
+	_, err := strconv.ParseUint(rawId, 10, 0)
+	if Check(err, "unable to parse id", c) {
+		return
+	}
+	c.Status(204)
+}

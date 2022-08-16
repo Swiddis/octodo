@@ -10,5 +10,6 @@ func main() {
 	r.GET("/healthcheck", handlers.Healthcheck)
 	r.GET("/todo/:id", handlers.GetTodo)
 	r.POST("/todo", handlers.PostTodo)
+	r.DELETE("/todo/:id", handlers.DeleteTodo)
 	r.Run()
 }
