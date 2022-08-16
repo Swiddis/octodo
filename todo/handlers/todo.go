@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/Swiddis/octodo/todo/model"
@@ -21,7 +20,7 @@ func Check(err error, msgIfError string, ctx *gin.Context) bool {
 func GetTodo(c *gin.Context) {
 	rawId := c.Param("id")
 	id, err := strconv.ParseUint(rawId, 10, 0)
-	if Check(err, fmt.Sprintf("Unable to parse id '%v', expected unsigned int", rawId), c) {
+	if Check(err, "unable to parse id", c) {
 		return
 	}
 	todo := model.GetDemoTodo(id)
@@ -30,8 +29,8 @@ func GetTodo(c *gin.Context) {
 
 func PostTodo(c *gin.Context) {
 	todo := model.Todo{}
-	err := c.ShouldBindJSON(todo)
-	if Check(err, "Unable to parse Todo", c) {
+	err := c.ShouldBindJSON(&todo)
+	if Check(err, "unable to parse Todo", c) {
 		return
 	}
 	c.JSON(201, todo)
