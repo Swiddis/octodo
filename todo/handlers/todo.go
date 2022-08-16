@@ -27,3 +27,12 @@ func GetTodo(c *gin.Context) {
 	todo := model.GetDemoTodo(id)
 	c.JSON(200, todo)
 }
+
+func PostTodo(c *gin.Context) {
+	todo := model.Todo{}
+	err := c.ShouldBindJSON(todo)
+	if Check(err, "Unable to parse Todo", c) {
+		return
+	}
+	c.JSON(201, todo)
+}
