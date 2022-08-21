@@ -18,7 +18,7 @@ func Check(err error, msgIfError string, ctx *gin.Context) bool {
 	return true
 }
 
-func GetTodo(c *gin.Context) {
+func GetTodo(c *gin.Context, db *gorm.DB) {
 	rawId := c.Param("id")
 	if id, err := strconv.Atoi(rawId); err != nil {
 		c.JSON(400, gin.H{
@@ -37,7 +37,7 @@ func GetTodo(c *gin.Context) {
 	}
 }
 
-func PostTodo(c *gin.Context) {
+func PostTodo(c *gin.Context, db *gorm.DB) {
 	todo := model.Todo{}
 	if err := c.ShouldBindJSON(&todo); err != nil {
 		c.JSON(400, gin.H{
@@ -49,7 +49,7 @@ func PostTodo(c *gin.Context) {
 	c.JSON(201, todo)
 }
 
-func PutTodo(c *gin.Context) {
+func PutTodo(c *gin.Context, db *gorm.DB) {
 	rawId := c.Param("id")
 	if id, err := strconv.Atoi(rawId); err != nil {
 		c.JSON(400, gin.H{
@@ -77,7 +77,7 @@ func PutTodo(c *gin.Context) {
 	}
 }
 
-func DeleteTodo(c *gin.Context) {
+func DeleteTodo(c *gin.Context, db *gorm.DB) {
 	rawId := c.Param("id")
 	if id, err := strconv.Atoi(rawId); err != nil {
 		c.JSON(400, gin.H{
