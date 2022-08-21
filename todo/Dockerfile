@@ -6,6 +6,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o ./todo .
 
 FROM alpine:latest AS prod
+RUN apk add curl
 WORKDIR /app
 COPY --from=build /build/todo /app/todo
 EXPOSE 8080
