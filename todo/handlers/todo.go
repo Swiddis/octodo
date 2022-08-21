@@ -8,16 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func Check(err error, msgIfError string, ctx *gin.Context) bool {
-	if err == nil {
-		return false
-	}
-	ctx.JSON(400, gin.H{
-		"error": msgIfError,
-	})
-	return true
-}
-
 func GetTodo(c *gin.Context, db *gorm.DB) {
 	rawId := c.Param("id")
 	if id, err := strconv.Atoi(rawId); err != nil {
